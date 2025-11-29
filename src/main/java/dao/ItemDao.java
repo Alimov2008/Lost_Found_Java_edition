@@ -59,4 +59,28 @@ public class ItemDao {
             p.executeUpdate();
         }
     }
+
+    public List<Item> searchLostByName(String name) throws SQLException {
+        List<Item> list = new ArrayList<>();
+        String sql = "SELECT * FROM lost_items WHERE name LIKE ?";
+
+        try (Connection c = Database.getConnection(); PreparedStatement p = c.prepareStatement(sql)) {
+            p.setString(1, "%" + name + "%");
+            try (ResultSet rs = p.executeQuery()) {
+                while (rs.next()) {
+                    list.add(new Item(
+                            rs.getInt("id"),
+                            rs.getString("name"),
+                            rs.getString("description"),
+                            rs.getInt("year"),
+                            rs.getString("month"),
+                            rs.getInt("day"),
+                            rs.getString("location"),
+                            rs.getString("contact")
+                    ));
+                }
+            }
+        }
+        return list;
+    }
 }
