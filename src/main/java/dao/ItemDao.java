@@ -51,4 +51,12 @@ public class ItemDao {
 
         return list;
     }
+
+    public void deleteLost(int id) throws SQLException {
+        String sql = "DELETE FROM lost_items WHERE id = ?";
+        try (Connection c = Database.getConnection(); PreparedStatement p = c.prepareStatement(sql)) {
+            p.setInt(1, id);
+            p.executeUpdate();
+        }
+    }
 }
