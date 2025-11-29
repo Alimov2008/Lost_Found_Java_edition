@@ -12,6 +12,6 @@ module com.lost_found.lost_found {
     requires com.almasb.fxgl.all;
     requires java.sql;
 
-    opens com.lost_found.lost_found to javafx.fxml;
-    exports com.lost_found.lost_found;
+    opens app to javafx.fxml;
+    exports app;
 }

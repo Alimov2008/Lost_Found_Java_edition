@@ -24,6 +24,9 @@ public class Item {
         this.contact = contact;
     }
 
+    public Item(String part, String part1, int i, String part2, int i1, String part3, String part4) {
+    }
+
     public int getId() {
         return id;
     }
