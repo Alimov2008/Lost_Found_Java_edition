@@ -1,0 +1,54 @@
+package dao;
+
+import model.Item;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ItemDao {
+
+    public void saveLost(Item it) throws SQLException {
+        String sql = "INSERT INTO lost_items(name,description,year,month,day,location,contact) VALUES (?,?,?,?,?,?,?)";
+
+        try (Connection c = Database.getConnection();
+             PreparedStatement p = c.prepareStatement(sql)) {
+
+            p.setString(1, it.getName());
+            p.setString(2, it.getDescription());
+            p.setInt(3, it.getYear());
+            p.setString(4, it.getMonth());
+            p.setInt(5, it.getDay());
+            p.setString(6, it.getLocation());
+            p.setString(7, it.getContact());
+
+            p.executeUpdate();
+        }
+    }
+
+    public List<Item> listLost() throws SQLException {
+        List<Item> list = new ArrayList<>();
+
+        String sql = "SELECT * FROM lost_items";
+
+        try (Connection c = Database.getConnection();
+             Statement s = c.createStatement();
+             ResultSet rs = s.executeQuery(sql)) {
+
+            while (rs.next()) {
+                list.add(new Item(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("description"),
+                        rs.getInt("year"),
+                        rs.getString("month"),
+                        rs.getInt("day"),
+                        rs.getString("location"),
+                        rs.getString("contact")
+                ));
+            }
+        }
+
+        return list;
+    }
+}
