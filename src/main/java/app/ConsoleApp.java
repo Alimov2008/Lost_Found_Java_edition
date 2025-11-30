@@ -16,13 +16,13 @@ public class ConsoleApp {
 
     public static void main(String[] args) {
         Database.initialize();
-        System.out.println("====== Lost & Found System ======");
+        System.out.println("=== Lost & Found System ===");
         showMainMenu();
     }
 
     private static void showMainMenu() {
         while (true) {
-            System.out.println("\n====== Console ======");
+            System.out.println("\n=== MAIN MENU ===");
             System.out.println("1. Report Lost Item");
             System.out.println("2. Report Found Item");
             System.out.println("3. View All Lost Items");
@@ -42,42 +42,40 @@ public class ConsoleApp {
                 case 5 -> searchLostItems();
                 case 6 -> deleteLostItem();
                 case 7 -> {
-                    System.out.println("Dushman naroda");
+                    System.out.println("Goodbye!");
                     return;
                 }
-                default -> System.out.println("Invalid option, try again");
+                default -> System.out.println("Invalid option! Please try again.");
             }
         }
     }
 
     private static void reportLostItem() {
-        System.out.println("\n===== Report Lost Item =====");
+        System.out.println("\n--- Report Lost Item ---");
         Item item = getItemDetailsFromUser();
 
         try {
             int id = itemDao.saveLost(item);
-            System.out.println("Lost item reported ");
+            System.out.println("✅ Lost item reported successfully! ID: " + id);
         } catch (Exception e) {
-            System.out.println("Error reporting lost item: " + e.getMessage());
-            e.printStackTrace();
+            System.out.println("❌ Error reporting lost item: " + e.getMessage());
         }
     }
 
     private static void reportFoundItem() {
-        System.out.println("\n===== Report Found Item =====");
+        System.out.println("\n--- Report Found Item ---");
         Item item = getItemDetailsFromUser();
 
         try {
             int id = itemDao.saveFound(item);
-            System.out.println("Found item reported successfully! ID: " + id);
+            System.out.println("✅ Found item reported successfully! ID: " + id);
         } catch (Exception e) {
-            System.out.println("Error reporting found item: " + e.getMessage());
-            e.printStackTrace();
+            System.out.println("❌ Error reporting found item: " + e.getMessage());
         }
     }
 
     private static void viewAllLostItems() {
-        System.out.println("\n===== All Lost Items =====");
+        System.out.println("\n--- All Lost Items ---");
         try {
             List<Item> items = itemDao.listLost();
             if (items.isEmpty()) {
@@ -86,12 +84,12 @@ public class ConsoleApp {
                 displayItems(items);
             }
         } catch (Exception e) {
-            System.out.println("Error retrieving lost items: " + e.getMessage());
+            System.out.println("❌ Error retrieving lost items: " + e.getMessage());
         }
     }
 
     private static void viewAllFoundItems() {
-        System.out.println("\n===== All Found Items =====");
+        System.out.println("\n--- All Found Items ---");
         try {
             List<Item> items = itemDao.getFoundAll();
             if (items.isEmpty()) {
@@ -100,7 +98,7 @@ public class ConsoleApp {
                 displayItems(items);
             }
         } catch (Exception e) {
-            System.out.println("Error retrieving found items: " + e.getMessage());
+            System.out.println("❌ Error retrieving found items: " + e.getMessage());
         }
     }
 
@@ -111,13 +109,13 @@ public class ConsoleApp {
         try {
             List<Item> items = itemDao.searchLostByName(name);
             if (items.isEmpty()) {
-                System.out.println("No matching lost items found");
+                System.out.println("No matching lost items found.");
             } else {
-                System.out.println("===== Search Results ======");
+                System.out.println("--- Search Results ---");
                 displayItems(items);
             }
         } catch (Exception e) {
-            System.out.println("Error searching lost items: " + e.getMessage());
+            System.out.println("❌ Error searching lost items: " + e.getMessage());
         }
     }
 
@@ -128,9 +126,9 @@ public class ConsoleApp {
 
         try {
             itemDao.deleteLost(id);
-            System.out.println("Lost item deleted ");
+            System.out.println("✅ Lost item deleted successfully!");
         } catch (Exception e) {
-            System.out.println("Error deleting lost item: " + e.getMessage());
+            System.out.println("❌ Error deleting lost item: " + e.getMessage());
         }
     }
 
@@ -143,9 +141,10 @@ public class ConsoleApp {
         System.out.print("Description: ");
         item.setDescription(scanner.nextLine());
 
+        // Get validated date
         int[] date = getValidatedDateFromUser();
         item.setYear(date[0]);
-        item.setMonth(getMonthName(date[1]));
+        item.setMonth(String.valueOf(date[1])); // Store month as number
         item.setDay(date[2]);
 
         System.out.print("Location: ");
@@ -160,6 +159,7 @@ public class ConsoleApp {
     private static int[] getValidatedDateFromUser() {
         int year, month, day;
 
+        // Get year (1900 - current year + 1)
         while (true) {
             System.out.print("Year (1900-" + (CURRENT_YEAR + 1) + "): ");
             year = getIntInput();
@@ -169,6 +169,7 @@ public class ConsoleApp {
             System.out.println("❌ Invalid year! Please enter between 1900 and " + (CURRENT_YEAR + 1));
         }
 
+        // Get month (1-12)
         while (true) {
             System.out.print("Month (1-12): ");
             month = getIntInput();
@@ -178,6 +179,7 @@ public class ConsoleApp {
             System.out.println("❌ Invalid month! Please enter between 1 and 12");
         }
 
+        // Get day (valid for the specific month and year)
         while (true) {
             System.out.print("Day: ");
             day = getIntInput();
@@ -211,22 +213,26 @@ public class ConsoleApp {
     }
 
     private static void displayItems(List<Item> items) {
-        System.out.println("┌─────┬────────────────────┬────────────────────┬──────────┬────────┬─────┬────────────────────┬────────────────────┐");
-        System.out.println("│ ID  │ Name               │ Description        │ Year     │ Month  │ Day │ Location           │ Contact            │");
-        System.out.println("├─────┼────────────────────┼────────────────────┼──────────┼────────┼─────┼────────────────────┼────────────────────┤");
+        System.out.println("┌─────┬────────────────────┬────────────────────┬────────────┬────────────────────┬────────────────────┐");
+        System.out.println("│ ID  │ Name               │ Description        │ Date       │ Location           │ Contact            │");
+        System.out.println("├─────┼────────────────────┼────────────────────┼────────────┼────────────────────┼────────────────────┤");
 
         for (Item item : items) {
-            System.out.printf("│ %-3d │ %-18s │ %-18s │ %-8d │ %-6s │ %-3d │ %-18s │ %-18s │%n",
+            String formattedDate = formatDate(item.getDay(), Integer.parseInt(item.getMonth()), item.getYear());
+
+            System.out.printf("│ %-3d │ %-18s │ %-18s │ %-10s │ %-18s │ %-18s │%n",
                     item.getId(),
                     truncate(item.getName(), 18),
                     truncate(item.getDescription(), 18),
-                    item.getYear(),
-                    truncate(item.getMonth(), 6),
-                    item.getDay(),
+                    formattedDate,
                     truncate(item.getLocation(), 18),
                     truncate(item.getContact(), 18));
         }
-        System.out.println("└─────┴────────────────────┴────────────────────┴──────────┴────────┴─────┴────────────────────┴────────────────────┘");
+        System.out.println("└─────┴────────────────────┴────────────────────┴────────────┴────────────────────┴────────────────────┘");
+    }
+
+    private static String formatDate(int day, int month, int year) {
+        return String.format("%02d-%02d-%d", day, month, year);
     }
 
     private static String truncate(String text, int length) {
