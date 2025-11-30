@@ -211,10 +211,9 @@ public class ConsoleApp {
         System.out.print("Description: ");
         item.setDescription(scanner.nextLine());
 
-        // Get validated date
         int[] date = getValidatedDateFromUser();
         item.setYear(date[0]);
-        item.setMonth(String.valueOf(date[1])); // Store month as number
+        item.setMonth(String.valueOf(date[1]));
         item.setDay(date[2]);
 
         System.out.print("Location: ");
@@ -238,7 +237,6 @@ public class ConsoleApp {
             System.out.println("Invalid year, enter between 1900 and " + (CURRENT_YEAR));
         }
 
-        // Get month (1-12)
         while (true) {
             System.out.print("Month (1-12): ");
             month = getIntInput();
@@ -248,7 +246,6 @@ public class ConsoleApp {
             System.out.println("Invalid month, enter between 1 and 12");
         }
 
-        // Get day (valid for the specific month and year)
         while (true) {
             System.out.print("Day: ");
             day = getIntInput();

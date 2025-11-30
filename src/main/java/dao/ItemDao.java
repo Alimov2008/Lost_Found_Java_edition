@@ -37,7 +37,6 @@ public class ItemDao {
 
             p.executeUpdate();
 
-            // Get the generated ID
             try (ResultSet generatedKeys = p.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     return generatedKeys.getInt(1);
@@ -105,7 +104,6 @@ public class ItemDao {
             ps.setString(7, item.getContact());
             ps.executeUpdate();
 
-            // Get the generated ID
             try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     return generatedKeys.getInt(1);

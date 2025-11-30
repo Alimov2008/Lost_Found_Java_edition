@@ -22,7 +22,6 @@ public class Database {
 
             return appDir.resolve("lostfound.db").toString();
         } catch (Exception e) {
-            // Fallback to current directory
             System.err.println("Error creating data directory: " + e.getMessage());
             return "lostfound.db";
         }
