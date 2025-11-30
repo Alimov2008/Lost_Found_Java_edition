@@ -6,8 +6,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static jdk.internal.vm.vector.VectorSupport.extract;
-
 public class ItemDao {
 
     private Item extract(ResultSet rs) throws SQLException {
@@ -59,16 +57,7 @@ public class ItemDao {
              ResultSet rs = s.executeQuery(sql)) {
 
             while (rs.next()) {
-                list.add(new Item(
-                        rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("description"),
-                        rs.getInt("year"),
-                        rs.getString("month"),
-                        rs.getInt("day"),
-                        rs.getString("location"),
-                        rs.getString("contact")
-                ));
+                list.add(extract(rs));
             }
         }
 
@@ -91,16 +80,7 @@ public class ItemDao {
             p.setString(1, "%" + name + "%");
             try (ResultSet rs = p.executeQuery()) {
                 while (rs.next()) {
-                    list.add(new Item(
-                            rs.getInt("id"),
-                            rs.getString("name"),
-                            rs.getString("description"),
-                            rs.getInt("year"),
-                            rs.getString("month"),
-                            rs.getInt("day"),
-                            rs.getString("location"),
-                            rs.getString("contact")
-                    ));
+                    list.add(extract(rs));
                 }
             }
         }
@@ -146,5 +126,29 @@ public class ItemDao {
             while (rs.next()) list.add(extract(rs));
         }
         return list;
+    }
+    public List<Item> searchFoundByName(String name) throws SQLException {
+        List<Item> list = new ArrayList<>();
+        String sql = "SELECT * FROM found_items WHERE name LIKE ?";
+
+        try (Connection c = Database.getConnection();
+             PreparedStatement p = c.prepareStatement(sql)) {
+            p.setString(1, "%" + name + "%");
+            try (ResultSet rs = p.executeQuery()) {
+                while (rs.next()) {
+                    list.add(extract(rs));
+                }
+            }
+        }
+        return list;
+    }
+
+    public void deleteFound(int id) throws SQLException {
+        String sql = "DELETE FROM found_items WHERE id = ?";
+        try (Connection c = Database.getConnection();
+             PreparedStatement p = c.prepareStatement(sql)) {
+            p.setInt(1, id);
+            p.executeUpdate();
+        }
     }
 }
