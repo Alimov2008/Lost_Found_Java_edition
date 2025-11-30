@@ -23,11 +23,11 @@ public class ItemDao {
         return item;
     }
 
-    public void saveLost(Item it) throws SQLException {
+    public int saveLost(Item it) throws SQLException {
         String sql = "INSERT INTO lost_items(name,description,year,month,day,location,contact) VALUES (?,?,?,?,?,?,?)";
 
         try (Connection c = Database.getConnection();
-             PreparedStatement p = c.prepareStatement(sql)) {
+             PreparedStatement p = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             p.setString(1, it.getName());
             p.setString(2, it.getDescription());
@@ -38,7 +38,15 @@ public class ItemDao {
             p.setString(7, it.getContact());
 
             p.executeUpdate();
+
+            // Get the generated ID
+            try (ResultSet generatedKeys = p.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1);
+                }
+            }
         }
+        return -1;
     }
 
     public List<Item> listLost() throws SQLException {
@@ -99,14 +107,14 @@ public class ItemDao {
         return list;
     }
 
-    public void saveFound(Item item) throws SQLException {
+    public int saveFound(Item item) throws SQLException {
         String sql = """
-            INSERT INTO found_items(name, description, year, month, day, location, contact)
-            VALUES(?,?,?,?,?,?,?)
-        """;
+        INSERT INTO found_items(name, description, year, month, day, location, contact)
+        VALUES(?,?,?,?,?,?,?)
+    """;
 
         try (Connection con = Database.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, item.getName());
             ps.setString(2, item.getDescription());
@@ -116,7 +124,15 @@ public class ItemDao {
             ps.setString(6, item.getLocation());
             ps.setString(7, item.getContact());
             ps.executeUpdate();
+
+            // Get the generated ID
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1);
+                }
+            }
         }
+        return -1;
     }
 
     public List<Item> getFoundAll() throws SQLException {
