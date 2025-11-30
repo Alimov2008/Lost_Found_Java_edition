@@ -12,16 +12,18 @@ public class Database {
 
     private static String getDatabasePath() {
         try {
-            String userHome = System.getProperty("user.home");
-            Path appDir = Paths.get(userHome, "LostFoundApp");
+            String currentDir = System.getProperty("user.dir");
+            Path appDir = Paths.get(currentDir, "LostFoundData");
 
             if (!Files.exists(appDir)) {
                 Files.createDirectories(appDir);
+                System.out.println("Created data directory: " + appDir.toString());
             }
 
             return appDir.resolve("lostfound.db").toString();
         } catch (Exception e) {
             // Fallback to current directory
+            System.err.println("Error creating data directory: " + e.getMessage());
             return "lostfound.db";
         }
     }
@@ -67,11 +69,12 @@ public class Database {
             System.out.println("Database initialized at: " + getDatabasePath());
 
         } catch (SQLException e) {
+            System.err.println("Database initialization error: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    public static String getDatabaseLocation() {
-        return getDatabasePath();
+    public static void displayDatabaseInfo() {
+        System.out.println("Database location: " + getDatabasePath());
     }
 }
