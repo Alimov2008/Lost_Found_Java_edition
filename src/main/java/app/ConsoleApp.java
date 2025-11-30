@@ -16,119 +16,189 @@ public class ConsoleApp {
 
     public static void main(String[] args) {
         Database.initialize();
-        System.out.println("=== Lost & Found System ===");
+        System.out.println("====== Lost & Found System ======");
         showMainMenu();
     }
 
     private static void showMainMenu() {
         while (true) {
-            System.out.println("\n=== MAIN MENU ===");
-            System.out.println("1. Report Lost Item");
-            System.out.println("2. Report Found Item");
-            System.out.println("3. View All Lost Items");
-            System.out.println("4. View All Found Items");
-            System.out.println("5. Search Lost Items");
-            System.out.println("6. Delete Lost Item");
-            System.out.println("7. Exit");
-            System.out.print("Choose an option: ");
+            System.out.println("\n====== MAIN MENU ======");
+            System.out.println("1. Report Item");
+            System.out.println("2. View Items");
+            System.out.println("3. Search Items");
+            System.out.println("4. Delete Items");
+            System.out.println("5. Exit");
+            System.out.print("Choose option: ");
 
             int choice = getIntInput();
 
             switch (choice) {
-                case 1 -> reportLostItem();
-                case 2 -> reportFoundItem();
-                case 3 -> viewAllLostItems();
-                case 4 -> viewAllFoundItems();
-                case 5 -> searchLostItems();
-                case 6 -> deleteLostItem();
-                case 7 -> {
-                    System.out.println("Goodbye!");
+                case 1 -> reportItem();
+                case 2 -> viewItems();
+                case 3 -> searchItems();
+                case 4 -> deleteItems();
+                case 5 -> {
+                    System.out.println("Dushman Naroda");
                     return;
                 }
-                default -> System.out.println("Invalid option! Please try again.");
+                default -> System.out.println("Invalid option, try again");
             }
         }
     }
 
+    private static void reportItem() {
+        System.out.println("\n===== Report Item =====");
+        System.out.println("1. Report Lost Item");
+        System.out.println("2. Report Found Item");
+        System.out.print("Choose option: ");
+
+        int choice = getIntInput();
+
+        switch (choice) {
+            case 1 -> reportLostItem();
+            case 2 -> reportFoundItem();
+            default -> {
+                System.out.println("Invalid option");
+                return;
+            }
+        }
+    }
+
+    private static void viewItems() {
+        System.out.println("\n====== View Items ======");
+        System.out.println("1. View Lost Items");
+        System.out.println("2. View Found Items");
+        System.out.print("Choose option: ");
+
+        int choice = getIntInput();
+
+        switch (choice) {
+            case 1 -> viewAllLostItems();
+            case 2 -> viewAllFoundItems();
+            default -> System.out.println("Invalid option");
+        }
+    }
+
     private static void reportLostItem() {
-        System.out.println("\n--- Report Lost Item ---");
+        System.out.println("\n===== Report Lost Item =====");
         Item item = getItemDetailsFromUser();
 
         try {
             int id = itemDao.saveLost(item);
-            System.out.println("✅ Lost item reported successfully! ID: " + id);
+            System.out.println("Lost item reported");
         } catch (Exception e) {
-            System.out.println("❌ Error reporting lost item: " + e.getMessage());
+            System.out.println("Error reporting lost item: " + e.getMessage());
         }
     }
 
     private static void reportFoundItem() {
-        System.out.println("\n--- Report Found Item ---");
+        System.out.println("\n===== Report Found Item =====");
         Item item = getItemDetailsFromUser();
 
         try {
             int id = itemDao.saveFound(item);
-            System.out.println("✅ Found item reported successfully! ID: " + id);
+            System.out.println("Found item reported");
         } catch (Exception e) {
-            System.out.println("❌ Error reporting found item: " + e.getMessage());
+            System.out.println("Error reporting found item: " + e.getMessage());
         }
     }
 
     private static void viewAllLostItems() {
-        System.out.println("\n--- All Lost Items ---");
+        System.out.println("\n===== All Lost Items =====");
         try {
             List<Item> items = itemDao.listLost();
             if (items.isEmpty()) {
                 System.out.println("No lost items found.");
             } else {
-                displayItems(items);
+                displayItems(items, "LOST");
             }
         } catch (Exception e) {
-            System.out.println("❌ Error retrieving lost items: " + e.getMessage());
+            System.out.println("Error getting lost items: " + e.getMessage());
         }
     }
 
     private static void viewAllFoundItems() {
-        System.out.println("\n--- All Found Items ---");
+        System.out.println("\n===== All Found Items =====");
         try {
             List<Item> items = itemDao.getFoundAll();
             if (items.isEmpty()) {
-                System.out.println("No found items found.");
+                System.out.println("No found items foun");
             } else {
-                displayItems(items);
+                displayItems(items, "FOUND");
             }
         } catch (Exception e) {
-            System.out.println("❌ Error retrieving found items: " + e.getMessage());
+            System.out.println("Error getting found items: " + e.getMessage());
         }
     }
 
-    private static void searchLostItems() {
-        System.out.print("\nEnter item name to search: ");
+    private static void searchItems() {
+        System.out.println("\n--- Search Items ---");
+        System.out.println("1. Search Lost Items");
+        System.out.println("2. Search Found Items");
+        System.out.print("Choose  option: ");
+
+        int choice = getIntInput();
+        System.out.print("Enter item name to search: ");
         String name = scanner.nextLine();
 
         try {
-            List<Item> items = itemDao.searchLostByName(name);
+            List<Item> items;
+            String type;
+
+            switch (choice) {
+                case 1 -> {
+                    items = itemDao.searchLostByName(name);
+                    type = "LOST";
+                }
+                case 2 -> {
+                    items = itemDao.searchFoundByName(name);
+                    type = "FOUND";
+                }
+                default -> {
+                    System.out.println("Invalid option");
+                    return;
+                }
+            }
+
             if (items.isEmpty()) {
-                System.out.println("No matching lost items found.");
+                System.out.println("No matching " + (choice == 1 ? "lost" : "found") + " items found.");
             } else {
-                System.out.println("--- Search Results ---");
-                displayItems(items);
+                System.out.println("===== Search Results (" + type + ") =====");
+                displayItems(items, type);
             }
         } catch (Exception e) {
-            System.out.println("❌ Error searching lost items: " + e.getMessage());
+            System.out.println("Error searching items: " + e.getMessage());
         }
     }
 
-    private static void deleteLostItem() {
-        viewAllLostItems();
-        System.out.print("\nEnter ID of lost item to delete: ");
-        int id = getIntInput();
+    private static void deleteItems() {
+        System.out.println("\n===== Delete Items =====");
+        System.out.println("1. Delete Lost Item");
+        System.out.println("2. Delete Found Item");
+        System.out.print("Choose  option: ");
+
+        int choice = getIntInput();
 
         try {
-            itemDao.deleteLost(id);
-            System.out.println("✅ Lost item deleted successfully!");
+            switch (choice) {
+                case 1 -> {
+                    viewAllLostItems();
+                    System.out.print("\nEnter ID of lost item to delete: ");
+                    int id = getIntInput();
+                    itemDao.deleteLost(id);
+                    System.out.println("Lost item deleted successfully!");
+                }
+                case 2 -> {
+                    viewAllFoundItems();
+                    System.out.print("\nEnter ID of found item to delete: ");
+                    int id = getIntInput();
+                    itemDao.deleteFound(id);
+                    System.out.println("Found item deleted successfully!");
+                }
+                default -> System.out.println("Invalid option");
+            }
         } catch (Exception e) {
-            System.out.println("❌ Error deleting lost item: " + e.getMessage());
+            System.out.println("Error deleting item: " + e.getMessage());
         }
     }
 
@@ -159,14 +229,13 @@ public class ConsoleApp {
     private static int[] getValidatedDateFromUser() {
         int year, month, day;
 
-        // Get year (1900 - current year + 1)
         while (true) {
-            System.out.print("Year (1900-" + (CURRENT_YEAR + 1) + "): ");
+            System.out.print("Year (1900-" + (CURRENT_YEAR) + "): ");
             year = getIntInput();
-            if (year >= 1900 && year <= CURRENT_YEAR + 1) {
+            if (year >= 1900 && year <= CURRENT_YEAR) {
                 break;
             }
-            System.out.println("❌ Invalid year! Please enter between 1900 and " + (CURRENT_YEAR + 1));
+            System.out.println("Invalid year, enter between 1900 and " + (CURRENT_YEAR));
         }
 
         // Get month (1-12)
@@ -176,7 +245,7 @@ public class ConsoleApp {
             if (month >= 1 && month <= 12) {
                 break;
             }
-            System.out.println("❌ Invalid month! Please enter between 1 and 12");
+            System.out.println("Invalid month, enter between 1 and 12");
         }
 
         // Get day (valid for the specific month and year)
@@ -187,7 +256,7 @@ public class ConsoleApp {
                 break;
             }
             int maxDays = getMaxDaysInMonth(year, month);
-            System.out.println("❌ Invalid day! Please enter between 1 and " + maxDays + " for " + getMonthName(month) + " " + year);
+            System.out.println("Invalid day, enter between 1 and " + maxDays + " for " + getMonthName(month) + " " + year);
         }
 
         return new int[]{year, month, day};
@@ -212,7 +281,12 @@ public class ConsoleApp {
         return monthNames[month - 1];
     }
 
-    private static void displayItems(List<Item> items) {
+    private static void displayItems(List<Item> items, String type) {
+        if (items.isEmpty()) {
+            System.out.println("No items to display.");
+            return;
+        }
+
         System.out.println("┌─────┬────────────────────┬────────────────────┬────────────┬────────────────────┬────────────────────┐");
         System.out.println("│ ID  │ Name               │ Description        │ Date       │ Location           │ Contact            │");
         System.out.println("├─────┼────────────────────┼────────────────────┼────────────┼────────────────────┼────────────────────┤");
@@ -229,6 +303,7 @@ public class ConsoleApp {
                     truncate(item.getContact(), 18));
         }
         System.out.println("└─────┴────────────────────┴────────────────────┴────────────┴────────────────────┴────────────────────┘");
+        System.out.println("Total " + type + " items: " + items.size());
     }
 
     private static String formatDate(int day, int month, int year) {
@@ -245,7 +320,7 @@ public class ConsoleApp {
             try {
                 return Integer.parseInt(scanner.nextLine());
             } catch (NumberFormatException e) {
-                System.out.print("Please enter a valid number: ");
+                System.out.print("Enter a valid number: ");
             }
         }
     }
