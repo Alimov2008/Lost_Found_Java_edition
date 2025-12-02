@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="app.controllers.MainController">
+
+    <top>
+        <MenuBar>
+            <Menu text="File">
+                <MenuItem text="Exit" onAction="#handleExit"/>
+            </Menu>
+            <Menu text="Help">
+                <MenuItem text="About" onAction="#handleAbout"/>
+            </Menu>
+        </MenuBar>
+    </top>
+
+    <center>
+        <TabPane fx:id="mainTabPane" tabClosingPolicy="UNAVAILABLE">
+
+            <Tab text="Lost Items">
+                <BorderPane>
+                    <top>
+                        <HBox spacing="10" style="-fx-padding: 10;">
+                            <Button text="Report Lost Item"
+                                    onAction="#handleReportLost"
+                                    style="-fx-font-weight: bold;"/>
+                            <TextField fx:id="searchLostField"
+                                       promptText="Search lost items..."/>
+                            <Button text="Search" onAction="#handleSearchLost"/>
+                            <Button text="Refresh" onAction="#handleRefreshLost"/>
+                        </HBox>
+                    </top>
+                    <center>
+                        <TableView fx:id="lostTable" style="-fx-padding: 10;">
+                        </TableView>
+                    </center>
+                </BorderPane>
+            </Tab>
+
+            <Tab text="Found Items">
+                <BorderPane>
+                    <top>
+                        <HBox spacing="10" style="-fx-padding: 10;">
+                            <Button text="Report Found Item"
+                                    onAction="#handleReportFound"
+                                    style="-fx-font-weight: bold;"/>
+                            <TextField fx:id="searchFoundField"
+                                       promptText="Search found items..."/>
+                            <Button text="Search" onAction="#handleSearchFound"/>
+                            <Button text="Refresh" onAction="#handleRefreshFound"/>
+                        </HBox>
+                    </top>
+                    <center>
+                        <TableView fx:id="foundTable" style="-fx-padding: 10;">
+                        </TableView>
+                    </center>
+                </BorderPane>
+            </Tab>
+
+        </TabPane>
+    </center>
+
+    <bottom>
+        <HBox style="-fx-background-color: #f0f0f0; -fx-padding: 5;">
+            <Label fx:id="statusLabel" text="Ready"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>
