@@ -136,6 +136,54 @@ public class MainController {
     }
 
     @FXML
+    private void handleDeleteLost() {
+        Item selected = lostTable.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            showError("Delete Error", "Please select an item to delete");
+            return;
+        }
+
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.setTitle("Confirm Delete");
+        confirm.setHeaderText("Delete Lost Item");
+        confirm.setContentText("Are you sure you want to delete: " + selected.getName() + "?");
+
+        if (confirm.showAndWait().get() == ButtonType.OK) {
+            try {
+                itemDao.deleteLost(selected.getId());
+                loadLostItems();
+                updateStatus("Deleted lost item: " + selected.getName());
+            } catch (Exception e) {
+                showError("Delete Error", "Failed to delete item: " + e.getMessage());
+            }
+        }
+    }
+
+    @FXML
+    private void handleDeleteFound() {
+        Item selected = foundTable.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            showError("Delete Error", "Please select an item to delete");
+            return;
+        }
+
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.setTitle("Confirm Delete");
+        confirm.setHeaderText("Delete Found Item");
+        confirm.setContentText("Are you sure you want to delete: " + selected.getName() + "?");
+
+        if (confirm.showAndWait().get() == ButtonType.OK) {
+            try {
+                itemDao.deleteFound(selected.getId());
+                loadFoundItems();
+                updateStatus("Deleted found item: " + selected.getName());
+            } catch (Exception e) {
+                showError("Delete Error", "Failed to delete item: " + e.getMessage());
+            }
+        }
+    }
+
+    @FXML
     private void handleExit() {
         System.exit(0);
     }
