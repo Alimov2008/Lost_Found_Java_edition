@@ -33,6 +33,8 @@
                                        promptText="Search lost items..."/>
                             <Button text="Search" onAction="#handleSearchLost"/>
                             <Button text="Refresh" onAction="#handleRefreshLost"/>
+                            <Button text="Delete Selected" onAction="#handleDeleteLost"
+                                    style="-fx-background-color: #ff4444; -fx-text-fill: white;"/>
                         </HBox>
                     </top>
                     <center>
@@ -53,6 +55,8 @@
                                        promptText="Search found items..."/>
                             <Button text="Search" onAction="#handleSearchFound"/>
                             <Button text="Refresh" onAction="#handleRefreshFound"/>
+                            <Button text="Delete Selected" onAction="#handleDeleteFound"
+                                    style="-fx-background-color: #ff4444; -fx-text-fill: white;"/>
                         </HBox>
                     </top>
                     <center>
