@@ -21,6 +21,7 @@ public class ItemDao {
         return item;
     }
 
+    //Lost
     public int saveLost(Item it) throws SQLException {
         String sql = "INSERT INTO lost_items(name,description,year,month,day,location,contact) VALUES (?,?,?,?,?,?,?)";
 
@@ -46,7 +47,7 @@ public class ItemDao {
         return -1;
     }
 
-    public List<Item> listLost() throws SQLException {
+    public List<Item> getLostAll() throws SQLException {
         List<Item> list = new ArrayList<>();
 
         String sql = "SELECT * FROM lost_items";
@@ -86,6 +87,7 @@ public class ItemDao {
         return list;
     }
 
+    //Found
     public int saveFound(Item item) throws SQLException {
         String sql = """
         INSERT INTO found_items(name, description, year, month, day, location, contact)
@@ -125,6 +127,7 @@ public class ItemDao {
         }
         return list;
     }
+
     public List<Item> searchFoundByName(String name) throws SQLException {
         List<Item> list = new ArrayList<>();
         String sql = "SELECT * FROM found_items WHERE name LIKE ?";
