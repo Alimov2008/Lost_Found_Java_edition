@@ -154,20 +154,19 @@ public class MainController {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/fxml/item_dialog.fxml")
             );
-            Parent root = loader.load();
+            Dialog<ButtonType> dialog = new Dialog<>();
+            dialog.setTitle(type.equals("lost") ? "Report Lost Item" : "Report Found Item");
+            dialog.setDialogPane(loader.load());
 
             ItemDialogController controller = loader.getController();
             controller.setItemType(type);
             controller.setMainController(this);
 
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle(type.equals("lost") ? "Report Lost Item" : "Report Found Item");
-            dialogStage.initModality(Modality.APPLICATION_MODAL);
-            dialogStage.setScene(new Scene(root));
-            dialogStage.showAndWait();
+            dialog.showAndWait();
 
         } catch (IOException e) {
-            showError("Error", e.getMessage());
+            showError("Error", "Cannot open dialog: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
