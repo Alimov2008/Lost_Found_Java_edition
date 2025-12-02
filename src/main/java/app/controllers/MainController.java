@@ -75,7 +75,7 @@ public class MainController {
 
     private void loadLostItems() {
         try {
-            List<Item> items = itemDao.listLost();
+            List<Item> items = itemDao.getLostAll();
             lostTable.getItems().setAll(items);
             updateStatus("loaded " + items.size() + " lost items");
         } catch (Exception e) {
