@@ -46,6 +46,7 @@ public class ConsoleApp {
         }
     }
 
+    // report functions
     private static void reportItem() {
         System.out.println("\n===== Report Item =====");
         System.out.println("1. Report Lost Item");
@@ -61,21 +62,6 @@ public class ConsoleApp {
                 System.out.println("Invalid option");
                 return;
             }
-        }
-    }
-
-    private static void viewItems() {
-        System.out.println("\n====== View Items ======");
-        System.out.println("1. View Lost Items");
-        System.out.println("2. View Found Items");
-        System.out.print("Choose option: ");
-
-        int choice = getIntInput();
-
-        switch (choice) {
-            case 1 -> viewAllLostItems();
-            case 2 -> viewAllFoundItems();
-            default -> System.out.println("Invalid option");
         }
     }
 
@@ -100,6 +86,22 @@ public class ConsoleApp {
             System.out.println("Found item reported");
         } catch (Exception e) {
             System.out.println("Error reporting found item: " + e.getMessage());
+        }
+    }
+
+    // view functions
+    private static void viewItems() {
+        System.out.println("\n====== View Items ======");
+        System.out.println("1. View Lost Items");
+        System.out.println("2. View Found Items");
+        System.out.print("Choose option: ");
+
+        int choice = getIntInput();
+
+        switch (choice) {
+            case 1 -> viewAllLostItems();
+            case 2 -> viewAllFoundItems();
+            default -> System.out.println("Invalid option");
         }
     }
 
@@ -225,6 +227,7 @@ public class ConsoleApp {
         return item;
     }
 
+    // date validation functions
     private static int[] getValidatedDateFromUser() {
         int year, month, day;
 
@@ -278,6 +281,11 @@ public class ConsoleApp {
         return monthNames[month - 1];
     }
 
+    private static String formatDate(int day, int month, int year) {
+        return String.format("%02d-%02d-%d", day, month, year);
+    }
+
+    // utility functions
     private static void displayItems(List<Item> items, String type) {
         if (items.isEmpty()) {
             System.out.println("No items to display.");
@@ -301,10 +309,6 @@ public class ConsoleApp {
         }
         System.out.println("└─────┴────────────────────┴────────────────────┴────────────┴────────────────────┴────────────────────┘");
         System.out.println("Total " + type + " items: " + items.size());
-    }
-
-    private static String formatDate(int day, int month, int year) {
-        return String.format("%02d-%02d-%d", day, month, year);
     }
 
     private static String truncate(String text, int length) {
