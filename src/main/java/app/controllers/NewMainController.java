@@ -221,7 +221,7 @@ public class NewMainController {
 
         try {
             if ("lost".equals(type)) {
-                List<Item> items = itemDao.listLost();
+                List<Item> items = itemDao.getLostAll();
                 lostTable.getItems().setAll(items);
                 lostCountLabel.setText(String.valueOf(items.size()));
                 updateStatus("Showing all lost items (" + items.size() + " items)");
@@ -305,7 +305,7 @@ public class NewMainController {
 
     private void loadLostItems() {
         try {
-            List<Item> items = itemDao.listLost();
+            List<Item> items = itemDao.getLostAll();
             lostTable.getItems().setAll(items);
             lostCountLabel.setText(String.valueOf(items.size()));
         } catch (Exception e) {
