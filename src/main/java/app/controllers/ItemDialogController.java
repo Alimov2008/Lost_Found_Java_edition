@@ -19,10 +19,10 @@ public class ItemDialogController {
     @FXML private TextField yearField;
     @FXML private TextField locationField;
     @FXML private TextField contactField;
+    @FXML private DialogPane dialogPane;
 
     private String itemType; // "lost" or "found"
     private NewMainController mainController;
-    private DialogPane dialogPane;
     private ItemDao itemDao = new ItemDao();
 
     private static final Map<String, String> monthMap = new HashMap<>();
@@ -50,7 +50,6 @@ public class ItemDialogController {
         yearField.setText(String.valueOf(today.getYear()));
         monthComboBox.setValue(getMonthName(today.getMonthValue()));
 
-        dialogPane = (DialogPane) nameField.getScene().getRoot();
         setupButtonActions();
     }
 
