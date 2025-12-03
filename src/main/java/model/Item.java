@@ -2,6 +2,9 @@ package model;
 
 import javafx.beans.property.*;
 
+import java.util.AbstractMap;
+import java.util.Map;
+
 public class Item {
     private final IntegerProperty id = new SimpleIntegerProperty();
     private final StringProperty name = new SimpleStringProperty();
@@ -42,6 +45,27 @@ public class Item {
                     String.format("%02d-%02d-%d", getDay(), monthInt, getYear())
             );
         } catch (NumberFormatException e) {
+            Map<String, Integer> monthNames = Map.ofEntries(
+                    new AbstractMap.SimpleEntry<>("January",1),
+            new AbstractMap.SimpleEntry<>("February",2),
+            new AbstractMap.SimpleEntry<>("March",3),
+            new AbstractMap.SimpleEntry<>("April",4),
+            new AbstractMap.SimpleEntry<>("May",5),
+            new AbstractMap.SimpleEntry<>("June",6),
+            new AbstractMap.SimpleEntry<>("July",7),
+            new AbstractMap.SimpleEntry<>("August",8),
+            new AbstractMap.SimpleEntry<>("September",9),
+            new AbstractMap.SimpleEntry<>("October",10),
+            new AbstractMap.SimpleEntry<>("November",11),
+            new AbstractMap.SimpleEntry<>("December",12)
+            );
+
+            Integer monthInt = monthNames.get(getMonth());
+            if (monthInt != null) {
+                return new SimpleStringProperty(
+                        String.format("%02d-%02d-%d", getDay(), monthInt, getYear())
+                );
+            }
             return new SimpleStringProperty(getDay() + "-" + getMonth() + "-" + getYear());
         }
     }
