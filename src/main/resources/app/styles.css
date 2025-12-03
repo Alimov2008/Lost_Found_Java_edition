@@ -1,0 +1,8 @@
+.root-grid {
+    -fx-font-family: "Segoe UI", "Arial";
+}
+
+.table-view {
+    -fx-border-color: lightgray;
+    -fx-border-width: 1;
+}
