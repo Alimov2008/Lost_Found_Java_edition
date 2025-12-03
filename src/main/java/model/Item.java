@@ -36,8 +36,14 @@ public class Item {
     public StringProperty contactProperty() { return contact; }
 
     public StringProperty formattedDateProperty() {
-        return new SimpleStringProperty(String.format("%02d-%02d-%d",
-                getDay(), Integer.parseInt(getMonth()), getYear()));
+        try {
+            int monthInt = Integer.parseInt(getMonth());
+            return new SimpleStringProperty(
+                    String.format("%02d-%02d-%d", getDay(), monthInt, getYear())
+            );
+        } catch (NumberFormatException e) {
+            return new SimpleStringProperty(getDay() + "-" + getMonth() + "-" + getYear());
+        }
     }
 
     public int getId() { return id.get(); }
