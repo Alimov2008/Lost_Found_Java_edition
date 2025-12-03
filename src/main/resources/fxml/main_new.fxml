@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="app.controllers.NewMainController">
+    <center>
+        <SplitPane dividerPositions="0.3" style="-fx-padding: 10;">
+
+            <SplitPane orientation="VERTICAL" dividerPositions="0.5">
+
+                <VBox spacing="10" style="-fx-padding: 10;">
+                    <Label text="Actions" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+                    <VBox spacing="5">
+                        <HBox spacing="5" alignment="CENTER_LEFT">
+                            <Button text="Report Item" onAction="#handleReportButton"
+                                    prefWidth="120" style="-fx-font-weight: bold;"/>
+                            <ComboBox fx:id="reportTypeCombo" promptText="Type"
+                                      prefWidth="80" visible="false"/>
+                        </HBox>
+
+                        <HBox spacing="5" alignment="CENTER_LEFT">
+                            <Button text="View Items" onAction="#handleViewButton"
+                                    prefWidth="120" style="-fx-font-weight: bold;"/>
+                            <ComboBox fx:id="viewTypeCombo" promptText="Type"
+                                      prefWidth="80" visible="false"/>
+                        </HBox>
+
+                        <HBox spacing="5" alignment="CENTER_LEFT">
+                            <Button text="Search Items" onAction="#handleSearchButton"
+                                    prefWidth="120" style="-fx-font-weight: bold;"/>
+                            <ComboBox fx:id="searchTypeCombo" promptText="Type"
+                                      prefWidth="80" visible="false"/>
+                            <TextField fx:id="searchField" promptText="Search term"
+                                       prefWidth="150" visible="false"/>
+                        </HBox>
+
+                        <HBox spacing="5" alignment="CENTER_LEFT">
+                            <Button text="Delete Items" onAction="#handleDeleteButton"
+                                    prefWidth="120" style="-fx-font-weight: bold;"/>
+                            <ComboBox fx:id="deleteTypeCombo" promptText="Type"
+                                      prefWidth="80" visible="false"/>
+                            <TextField fx:id="deleteIdField" promptText="ID to delete"
+                                       prefWidth="150" visible="false"/>
+                        </HBox>
+
+                        <Button text="Exit" onAction="#handleExit"
+                                prefWidth="200" style="-fx-background-color: #ff4444; -fx-text-fill: white;"/>
+                    </VBox>
+                </VBox>
+
+                <VBox fx:id="formContainer" spacing="10" style="-fx-padding: 10;">
+                    <Label text="Form" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                </VBox>
+
+            </SplitPane>
+
+            <SplitPane dividerPositions="0.5">
+
+                <VBox spacing="5" style="-fx-padding: 5;">
+                    <Label text="Lost Items" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 5;"/>
+                    <TableView fx:id="lostTable" VBox.vgrow="ALWAYS">
+                        <placeholder>
+                            <Label text="No lost items to display"/>
+                        </placeholder>
+                    </TableView>
+                    <HBox spacing="5" style="-fx-padding: 5;">
+                        <Label text="Count:"/>
+                        <Label fx:id="lostCountLabel" text="0"/>
+                    </HBox>
+                </VBox>
+
+                <!-- Right Table: Found Items -->
+                <VBox spacing="5" style="-fx-padding: 5;">
+                    <Label text="Found Items" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 5;"/>
+                    <TableView fx:id="foundTable" VBox.vgrow="ALWAYS">
+                        <placeholder>
+                            <Label text="No found items to display"/>
+                        </placeholder>
+                    </TableView>
+                    <HBox spacing="5" style="-fx-padding: 5;">
+                        <Label text="Count:"/>
+                        <Label fx:id="foundCountLabel" text="0"/>
+                    </HBox>
+                </VBox>
+
+            </SplitPane>
+
+        </SplitPane>
+    </center>
+
+    <bottom>
+        <HBox style="-fx-background-color: #f0f0f0; -fx-padding: 5;">
+            <Label fx:id="statusLabel" text="Ready"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>
