@@ -9,6 +9,7 @@ import model.Item;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
+import java.time.YearMonth;
 
 public class ItemDialogController {
 
@@ -134,21 +135,28 @@ public class ItemDialogController {
                 return false;
             }
 
-            if (day < 1 || day > 31) {
-                showError("Validation Error", "Day must be between 1 and 31");
+            int monthNum = Integer.parseInt(monthMap.get(month));
+
+            // Enhanced validation using YearMonth
+            YearMonth yearMonth = YearMonth.of(year, monthNum);
+            int maxDays = yearMonth.lengthOfMonth();
+
+            if (day < 1 || day > maxDays) {
+                showError("Validation Error",
+                        "Day must be between 1 and " + maxDays + " for " + month);
                 dayField.requestFocus();
                 return false;
             }
 
-            if (year < 1900 || year > LocalDate.now().getYear() + 1) {
+            if (year < 1900 || year > LocalDate.now().getYear()) {
                 showError("Validation Error",
-                        "Year must be between 1900 and " + (LocalDate.now().getYear() + 1));
+                        "Year must be between 1900 and " + LocalDate.now().getYear());
                 yearField.requestFocus();
                 return false;
             }
 
         } catch (NumberFormatException e) {
-            showError("Validation Error", "Day and Year must be valid numbers");
+            showError("Validation Error", "Date fields must be valid numbers");
             return false;
         }
 
