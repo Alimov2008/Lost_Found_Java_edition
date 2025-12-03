@@ -13,12 +13,14 @@ public class MainApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Database.initialize();
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/main.fxml"));
-        Scene scene = new Scene(root, 2560, 1600);
 
-        primaryStage.setTitle("Lost & Found System");
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/main_new.fxml"));
+
+        Scene scene = new Scene(root, 1600, 800); // Larger window for new layout
+
+        primaryStage.setTitle("Lost & Found System - Dashboard");
         primaryStage.setScene(scene);
-        primaryStage.setMinWidth(800);
+        primaryStage.setMinWidth(1000);
         primaryStage.setMinHeight(600);
         primaryStage.show();
     }
