@@ -206,34 +206,25 @@ public class MainController {
     }
 
     private void handleDelete() throws SQLException {
-        String idText = idField.getText().trim();
-        if (idText.isEmpty()) {
-            showError("To delete, enter ID in the ID field.");
-            return;
-        }
-        int id;
-        try { id = Integer.parseInt(idText); } catch (NumberFormatException e) { showError("Invalid ID."); return; }
+        Item selected = (currentType == Type.LOST)
+                ? lostTable.getSelectionModel().getSelectedItem()
+                : foundTable.getSelectionModel().getSelectedItem();
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirm Delete");
-        alert.setHeaderText("Delete " + currentType + " item id=" + id + "?");
-        alert.setContentText("This action cannot be undone.");
-        Optional<ButtonType> res = alert.showAndWait();
-        if (res.isEmpty() || res.get() != ButtonType.OK) {
-            statusLabel.setText("Delete cancelled");
+        if (selected == null) {
+            showError("Select an item from the table to delete.");
             return;
         }
+
+        int id = selected.getId();
 
         if (currentType == Type.LOST) {
             itemDao.deleteLost(id);
-            statusLabel.setText("Deleted lost item id=" + id);
             refreshLostTableOnly();
         } else {
             itemDao.deleteFound(id);
-            statusLabel.setText("Deleted found item id=" + id);
             refreshFoundTableOnly();
         }
-        clearFormFields();
+        statusLabel.setText("Deleted item id=" + id);
     }
 
     @FXML
