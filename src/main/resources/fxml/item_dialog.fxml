@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<DialogPane xmlns="http://javafx.com/javafx/11.0.1"
+<DialogPane fx:id="dialogPane" xmlns="http://javafx.com/javafx/11.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="app.controllers.ItemDialogController">
 
