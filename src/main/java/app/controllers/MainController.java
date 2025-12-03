@@ -126,12 +126,12 @@ public class MainController {
     }
 
     @FXML
-    private void handleRefreshLost() {
+    void handleRefreshLost() {
         loadLostItems();
     }
 
     @FXML
-    private void handleRefreshFound() {
+    void handleRefreshFound() {
         loadFoundItems();
     }
 
