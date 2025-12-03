@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<GridPane xmlns="http://javafx.com/javafx/11.0.2"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="app.MainController"
+          styleClass="root-grid">
+
+    <columnConstraints>
+        <ColumnConstraints percentWidth="30"/>
+        <ColumnConstraints percentWidth="70"/>
+    </columnConstraints>
+
+    <rowConstraints>
+        <RowConstraints percentHeight="50"/>
+        <RowConstraints percentHeight="50"/>
+    </rowConstraints>
+
+    <VBox spacing="10" padding="12" GridPane.columnIndex="0" GridPane.rowIndex="0">
+        <Label text="Actions" style="-fx-font-size:16px; -fx-font-weight:bold;"/>
+        <MenuButton text="Report Item">
+            <items>
+                <MenuItem text="Report Lost" onAction="#onReportLost"/>
+                <MenuItem text="Report Found" onAction="#onReportFound"/>
+            </items>
+        </MenuButton>
+
+        <MenuButton text="View Items">
+            <items>
+                <MenuItem text="View Lost" onAction="#onViewLost"/>
+                <MenuItem text="View Found" onAction="#onViewFound"/>
+            </items>
+        </MenuButton>
+
+        <MenuButton text="Search Items">
+            <items>
+                <MenuItem text="Search Lost" onAction="#onSearchLost"/>
+                <MenuItem text="Search Found" onAction="#onSearchFound"/>
+            </items>
+        </MenuButton>
+
+        <MenuButton text="Delete Items">
+            <items>
+                <MenuItem text="Delete Lost" onAction="#onDeleteLost"/>
+                <MenuItem text="Delete Found" onAction="#onDeleteFound"/>
+            </items>
+        </MenuButton>
+
+        <Button text="Exit" onAction="#onExit"/>
+    </VBox>
+
+    <VBox spacing="8" padding="12" GridPane.columnIndex="0" GridPane.rowIndex="1">
+        <Label text="Form / Search / Delete" style="-fx-font-size:14px; -fx-font-weight:bold;"/>
+        <GridPane hgap="8" vgap="8">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="40"/>
+                <ColumnConstraints percentWidth="60"/>
+            </columnConstraints>
+
+            <Label text="ID:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <TextField fx:id="idField" promptText="(for delete or editing)" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <Label text="Name:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <TextField fx:id="nameField" promptText="Item name" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <Label text="Description:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <TextField fx:id="descriptionField" promptText="Description" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+            <Label text="Year:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <TextField fx:id="yearField" promptText="e.g. 2025" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+            <Label text="Month:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <TextField fx:id="monthField" promptText="1-12 or name" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+            <Label text="Day:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+            <TextField fx:id="dayField" promptText="1-31" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+            <Label text="Location:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+            <TextField fx:id="locationField" promptText="Where it was lost/found" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+            <Label text="Contact:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+            <TextField fx:id="contactField" promptText="Phone/email" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+        </GridPane>
+
+        <HBox spacing="8" alignment="CENTER_RIGHT">
+            <Button text="Submit" fx:id="submitButton" onAction="#onSubmit"/>
+            <Button text="Clear" onAction="#onClear"/>
+        </HBox>
+
+        <Label fx:id="statusLabel" text="" />
+    </VBox>
+
+    <GridPane GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.rowSpan="2" padding="12" hgap="12">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="50"/>
+            <ColumnConstraints percentWidth="50"/>
+        </columnConstraints>
+
+        <VBox spacing="6" GridPane.columnIndex="0">
+            <Label text="Lost Items" style="-fx-font-weight:bold;"/>
+            <TableView fx:id="lostTable" prefHeight="1000">
+                <columns>
+                    <TableColumn text="ID" prefWidth="50" fx:id="lostIdCol"/>
+                    <TableColumn text="Name" prefWidth="150" fx:id="lostNameCol"/>
+                    <TableColumn text="Description" prefWidth="200" fx:id="lostDescCol"/>
+                    <TableColumn text="Date" prefWidth="90" fx:id="lostDateCol"/>
+                    <TableColumn text="Location" prefWidth="150" fx:id="lostLocationCol"/>
+                    <TableColumn text="Contact" prefWidth="150" fx:id="lostContactCol"/>
+                </columns>
+            </TableView>
+        </VBox>
+
+        <VBox spacing="6" GridPane.columnIndex="1">
+            <Label text="Found Items" style="-fx-font-weight:bold;"/>
+            <TableView fx:id="foundTable" prefHeight="1000">
+                <columns>
+                    <TableColumn text="ID" prefWidth="50" fx:id="foundIdCol"/>
+                    <TableColumn text="Name" prefWidth="150" fx:id="foundNameCol"/>
+                    <TableColumn text="Description" prefWidth="200" fx:id="foundDescCol"/>
+                    <TableColumn text="Date" prefWidth="90" fx:id="foundDateCol"/>
+                    <TableColumn text="Location" prefWidth="150" fx:id="foundLocationCol"/>
+                    <TableColumn text="Contact" prefWidth="150" fx:id="foundContactCol"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </GridPane>
+
+</GridPane>
