@@ -46,7 +46,7 @@ public class ItemDao {
         return -1;
     }
 
-    public List<Item> listLost() throws SQLException {
+    public List<Item> getLostAll() throws SQLException {
         List<Item> list = new ArrayList<>();
 
         String sql = "SELECT * FROM lost_items";

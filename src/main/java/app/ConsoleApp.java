@@ -106,7 +106,7 @@ public class ConsoleApp {
     private static void viewAllLostItems() {
         System.out.println("\n===== All Lost Items =====");
         try {
-            List<Item> items = itemDao.listLost();
+            List<Item> items = itemDao.getLostAll();
             if (items.isEmpty()) {
                 System.out.println("No lost items found.");
             } else {
