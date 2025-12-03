@@ -1,17 +1,12 @@
-module com.lost_found.lost_found {
+module app {
     requires javafx.controls;
     requires javafx.fxml;
-    requires javafx.web;
-
-    requires org.controlsfx.controls;
-    requires com.dlsc.formsfx;
-    requires net.synedra.validatorfx;
-    requires org.kordamp.ikonli.javafx;
-    requires org.kordamp.bootstrapfx.core;
-    requires eu.hansolo.tilesfx;
-    requires com.almasb.fxgl.all;
     requires java.sql;
 
     opens app to javafx.fxml;
+    opens app.controllers to javafx.fxml;
+    opens app.model to javafx.fxml;
+
     exports app;
+    exports app.controllers;
 }

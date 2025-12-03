@@ -21,7 +21,7 @@ public class ItemDialogController {
     @FXML private TextField contactField;
 
     private String itemType; // "lost" or "found"
-    private MainController mainController;
+    private NewMainController mainController;
     private DialogPane dialogPane;
     private ItemDao itemDao = new ItemDao();
 
@@ -61,7 +61,7 @@ public class ItemDialogController {
         }
     }
 
-    public void setMainController(MainController mainController) {
+    public void setMainController(NewMainController mainController) {
         this.mainController = mainController;
     }
 
