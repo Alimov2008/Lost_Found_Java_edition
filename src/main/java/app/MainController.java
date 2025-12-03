@@ -15,7 +15,6 @@ import java.util.Optional;
 
 public class MainController {
 
-    @FXML private TextField idField;
     @FXML private TextField nameField;
     @FXML private TextField descriptionField;
     @FXML private TextField yearField;
@@ -93,7 +92,6 @@ public class MainController {
     }
 
     private void populateFormFromItem(Item it) {
-        idField.setText(String.valueOf(it.getId()));
         nameField.setText(it.getName());
         descriptionField.setText(it.getDescription());
         yearField.setText(String.valueOf(it.getYear()));
@@ -236,7 +234,6 @@ public class MainController {
     }
 
     private void clearFormFields() {
-        idField.clear();
         nameField.clear();
         descriptionField.clear();
         yearField.clear();
@@ -248,14 +245,6 @@ public class MainController {
 
     private Item collectItemFromForm(boolean includeId) {
         Item item = new Item();
-        try {
-            if (includeId && !idField.getText().trim().isEmpty()) {
-                item.setId(Integer.parseInt(idField.getText().trim()));
-            }
-        } catch (NumberFormatException e) {
-            showError("ID must be a number.");
-            return null;
-        }
 
         String name = nameField.getText().trim();
         if (name.isEmpty()) {
