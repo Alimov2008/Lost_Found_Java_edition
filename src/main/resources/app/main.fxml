@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 <GridPane xmlns="http://javafx.com/javafx/11.0.2"
           xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="app.MainController"
@@ -17,7 +18,10 @@
         <RowConstraints percentHeight="50"/>
     </rowConstraints>
 
-    <VBox spacing="10" padding="12" GridPane.columnIndex="0" GridPane.rowIndex="0">
+    <VBox spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="0">
+        <padding>
+            <Insets top="12" right="12" bottom="12" left="12"/>
+        </padding>
         <Label text="Actions" style="-fx-font-size:16px; -fx-font-weight:bold;"/>
         <MenuButton text="Report Item">
             <items>
@@ -50,7 +54,10 @@
         <Button text="Exit" onAction="#onExit"/>
     </VBox>
 
-    <VBox spacing="8" padding="12" GridPane.columnIndex="0" GridPane.rowIndex="1">
+    <VBox spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="1">
+        <padding>
+            <Insets top="12" right="12" bottom="12" left="12"/>
+        </padding>
         <Label text="Form / Search / Delete" style="-fx-font-size:14px; -fx-font-weight:bold;"/>
         <GridPane hgap="8" vgap="8">
             <columnConstraints>
@@ -91,7 +98,11 @@
         <Label fx:id="statusLabel" text="" />
     </VBox>
 
-    <GridPane GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.rowSpan="2" padding="12" hgap="12">
+    <GridPane GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.rowSpan="2" hgap="12">
+        <padding>
+            <Insets top="12" right="12" bottom="12" left="12"/>
+        </padding>
+
         <columnConstraints>
             <ColumnConstraints percentWidth="50"/>
             <ColumnConstraints percentWidth="50"/>
