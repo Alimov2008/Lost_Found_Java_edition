@@ -203,6 +203,7 @@ public class MainController {
             foundList.setAll(itemDao.searchFoundByName(name));
             statusLabel.setText("Search results for found items: " + foundList.size());
         }
+        clearFormFields();
     }
 
     private void handleDelete() throws SQLException {
@@ -225,6 +226,7 @@ public class MainController {
             refreshFoundTableOnly();
         }
         statusLabel.setText("Deleted item id=" + id);
+        clearFormFields();
     }
 
     @FXML
