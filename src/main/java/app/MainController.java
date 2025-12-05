@@ -161,10 +161,10 @@ public class MainController {
 
     @FXML
     void onSubmit() {
-        if (!validateDateFields()){
+        if (!validateDateFields()) {
             return;
         }
-
+        
         try {
             switch (currentMode) {
                 case REPORT -> handleReport();
