@@ -182,7 +182,8 @@ public class MainController {
 
     private void handleReport() throws SQLException {
         Item item = collectItemFromForm(false);
-        if (item == null) return; // validation failed
+        if (item == null)
+            return;
         if (currentType == Type.LOST) {
             int id = itemDao.saveLost(item);
             statusLabel.setText("Lost item reported (id=" + id + ")");
@@ -197,7 +198,6 @@ public class MainController {
 
     private void handleSearch() throws SQLException {
 
-        // Collect all fields (optional)
         String name = emptyToNull(nameField.getText());
         String desc = emptyToNull(descriptionField.getText());
         Integer year = parseNullableInt(yearField.getText());
@@ -279,11 +279,9 @@ public class MainController {
         }
     }
 
-
     private boolean validateDateFields() {
-        statusLabel.setText(""); // clear old errors
+        statusLabel.setText("");
 
-        // ---- YEAR ----
         String yearText = yearField.getText().trim();
         int currentYear = java.time.LocalDate.now().getYear();
 
@@ -301,7 +299,6 @@ public class MainController {
         }
 
 
-        // ---- MONTH ----
         String monthText = monthField.getText().trim();
         int month;
         try {
@@ -317,7 +314,6 @@ public class MainController {
         }
 
 
-        // ---- DAY ----
         String dayText = dayField.getText().trim();
         int day;
         try {
@@ -327,7 +323,6 @@ public class MainController {
             return false;
         }
 
-        // Check valid day-in-month using Java DateTime
         try {
             java.time.LocalDate.of(year, month, day);
         } catch (Exception e) {

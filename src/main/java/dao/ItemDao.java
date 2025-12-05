@@ -21,10 +21,6 @@ public class ItemDao {
         return item;
     }
 
-    // ======================================================
-    //   FLEXIBLE SEARCH FOR LOST ITEMS
-    // ======================================================
-
     public List<Item> searchLostFlexible(
             String name, String desc, Integer year, String month, Integer day,
             String location, String contact) throws SQLException {
@@ -42,31 +38,24 @@ public class ItemDao {
         try (Connection c = Database.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
 
-            // name
             ps.setObject(1, name);
             ps.setObject(2, name != null ? "%" + name + "%" : null);
 
-            // description
             ps.setObject(3, desc);
             ps.setObject(4, desc != null ? "%" + desc + "%" : null);
 
-            // year
             ps.setObject(5, year);
             ps.setObject(6, year);
 
-            // month
             ps.setObject(7, month);
             ps.setObject(8, month);
 
-            // day
             ps.setObject(9, day);
             ps.setObject(10, day);
 
-            // location
             ps.setObject(11, location);
             ps.setObject(12, location != null ? "%" + location + "%" : null);
 
-            // contact
             ps.setObject(13, contact);
             ps.setObject(14, contact != null ? "%" + contact + "%" : null);
 
@@ -77,11 +66,6 @@ public class ItemDao {
             return list;
         }
     }
-
-
-    // ======================================================
-    //   FLEXIBLE SEARCH FOR FOUND ITEMS
-    // ======================================================
 
     public List<Item> searchFoundFlexible(
             String name, String desc, Integer year, String month, Integer day,
@@ -100,31 +84,24 @@ public class ItemDao {
         try (Connection c = Database.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
 
-            // name
             ps.setObject(1, name);
             ps.setObject(2, name != null ? "%" + name + "%" : null);
 
-            // description
             ps.setObject(3, desc);
             ps.setObject(4, desc != null ? "%" + desc + "%" : null);
 
-            // year
             ps.setObject(5, year);
             ps.setObject(6, year);
 
-            // month
             ps.setObject(7, month);
             ps.setObject(8, month);
 
-            // day
             ps.setObject(9, day);
             ps.setObject(10, day);
 
-            // location
             ps.setObject(11, location);
             ps.setObject(12, location != null ? "%" + location + "%" : null);
 
-            // contact
             ps.setObject(13, contact);
             ps.setObject(14, contact != null ? "%" + contact + "%" : null);
 
@@ -137,9 +114,7 @@ public class ItemDao {
     }
 
 
-    // ======================================================
-    //   SAVE / DELETE / GET (UNCHANGED)
-    // ======================================================
+
 
     public int saveLost(Item it) throws SQLException {
         String sql = "INSERT INTO lost_items(name,description,year,month,day,location,contact) VALUES (?,?,?,?,?,?,?)";
