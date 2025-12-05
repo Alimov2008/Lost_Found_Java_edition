@@ -161,6 +161,10 @@ public class MainController {
 
     @FXML
     void onSubmit() {
+        if (!validateDateFields()){
+            return;
+        }
+
         try {
             switch (currentMode) {
                 case REPORT -> handleReport();
@@ -242,6 +246,65 @@ public class MainController {
         locationField.clear();
         contactField.clear();
     }
+
+    private boolean validateDateFields() {
+        statusLabel.setText(""); // clear old errors
+
+        // ---- YEAR ----
+        String yearText = yearField.getText().trim();
+        int currentYear = java.time.LocalDate.now().getYear();
+
+        int year;
+        try {
+            year = Integer.parseInt(yearText);
+        } catch (NumberFormatException e) {
+            statusLabel.setText("Year must be a number.");
+            return false;
+        }
+
+        if (year < 1900 || year > currentYear) {
+            statusLabel.setText("Year must be between 1900 and " + currentYear);
+            return false;
+        }
+
+
+        // ---- MONTH ----
+        String monthText = monthField.getText().trim();
+        int month;
+        try {
+            month = Integer.parseInt(monthText);
+        } catch (NumberFormatException e) {
+            statusLabel.setText("Month must be a number between 1–12.");
+            return false;
+        }
+
+        if (month < 1 || month > 12) {
+            statusLabel.setText("Month must be between 1–12.");
+            return false;
+        }
+
+
+        // ---- DAY ----
+        String dayText = dayField.getText().trim();
+        int day;
+        try {
+            day = Integer.parseInt(dayText);
+        } catch (NumberFormatException e) {
+            statusLabel.setText("Day must be a number.");
+            return false;
+        }
+
+        // Check valid day-in-month using Java DateTime
+        try {
+            java.time.LocalDate.of(year, month, day);
+        } catch (Exception e) {
+            statusLabel.setText("Invalid day for given month.");
+            return false;
+        }
+
+        return true;
+    }
+
 
     private Item collectItemFromForm(boolean includeId) {
         Item item = new Item();
