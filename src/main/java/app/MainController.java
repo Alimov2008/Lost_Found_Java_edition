@@ -196,20 +196,35 @@ public class MainController {
     }
 
     private void handleSearch() throws SQLException {
-        String name = nameField.getText().trim();
-        if (name.isEmpty()) {
-            showError("To search, enter Name (partial or full).");
+
+        // Collect all fields (optional)
+        String name = emptyToNull(nameField.getText());
+        String desc = emptyToNull(descriptionField.getText());
+        Integer year = parseNullableInt(yearField.getText());
+        String month = emptyToNull(monthField.getText());
+        Integer day = parseNullableInt(dayField.getText());
+        String loc = emptyToNull(locationField.getText());
+        String contact = emptyToNull(contactField.getText());
+
+        boolean anyField = name != null || desc != null || year != null || month != null
+                || day != null || loc != null || contact != null;
+
+        if (!anyField) {
+            showError("Enter at least one field to search.");
             return;
         }
+
         if (currentType == Type.LOST) {
-            lostList.setAll(itemDao.searchLostByName(name));
-            statusLabel.setText("Search results for lost items: " + lostList.size());
+            lostList.setAll(itemDao.searchLostFlexible(name, desc, year, month, day, loc, contact));
+            statusLabel.setText("Search results (lost): " + lostList.size());
         } else {
-            foundList.setAll(itemDao.searchFoundByName(name));
-            statusLabel.setText("Search results for found items: " + foundList.size());
+            foundList.setAll(itemDao.searchFoundFlexible(name, desc, year, month, day, loc, contact));
+            statusLabel.setText("Search results (found): " + foundList.size());
         }
+
         clearFormFields();
     }
+
 
     private void handleDelete() throws SQLException {
         Item selected = (currentType == Type.LOST)
@@ -249,6 +264,21 @@ public class MainController {
         locationField.clear();
         contactField.clear();
     }
+
+    private String emptyToNull(String s) {
+        if (s == null || s.trim().isEmpty()) return null;
+        return s.trim();
+    }
+
+    private Integer parseNullableInt(String s) {
+        try {
+            if (s == null || s.trim().isEmpty()) return null;
+            return Integer.parseInt(s.trim());
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
+
 
     private boolean validateDateFields() {
         statusLabel.setText(""); // clear old errors

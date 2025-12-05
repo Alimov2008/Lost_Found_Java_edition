@@ -21,6 +21,126 @@ public class ItemDao {
         return item;
     }
 
+    // ======================================================
+    //   FLEXIBLE SEARCH FOR LOST ITEMS
+    // ======================================================
+
+    public List<Item> searchLostFlexible(
+            String name, String desc, Integer year, String month, Integer day,
+            String location, String contact) throws SQLException {
+
+        String sql =
+                "SELECT * FROM lost_items WHERE "
+                        + " (? IS NULL OR LOWER(name) LIKE LOWER(?)) "
+                        + " AND (? IS NULL OR LOWER(description) LIKE LOWER(?)) "
+                        + " AND (? IS NULL OR year = ?) "
+                        + " AND (? IS NULL OR LOWER(month) = LOWER(?)) "
+                        + " AND (? IS NULL OR day = ?) "
+                        + " AND (? IS NULL OR LOWER(location) LIKE LOWER(?)) "
+                        + " AND (? IS NULL OR LOWER(contact) LIKE LOWER(?)) ";
+
+        try (Connection c = Database.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+
+            // name
+            ps.setObject(1, name);
+            ps.setObject(2, name != null ? "%" + name + "%" : null);
+
+            // description
+            ps.setObject(3, desc);
+            ps.setObject(4, desc != null ? "%" + desc + "%" : null);
+
+            // year
+            ps.setObject(5, year);
+            ps.setObject(6, year);
+
+            // month
+            ps.setObject(7, month);
+            ps.setObject(8, month);
+
+            // day
+            ps.setObject(9, day);
+            ps.setObject(10, day);
+
+            // location
+            ps.setObject(11, location);
+            ps.setObject(12, location != null ? "%" + location + "%" : null);
+
+            // contact
+            ps.setObject(13, contact);
+            ps.setObject(14, contact != null ? "%" + contact + "%" : null);
+
+            List<Item> list = new ArrayList<>();
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) list.add(extract(rs));
+            }
+            return list;
+        }
+    }
+
+
+    // ======================================================
+    //   FLEXIBLE SEARCH FOR FOUND ITEMS
+    // ======================================================
+
+    public List<Item> searchFoundFlexible(
+            String name, String desc, Integer year, String month, Integer day,
+            String location, String contact) throws SQLException {
+
+        String sql =
+                "SELECT * FROM found_items WHERE "
+                        + " (? IS NULL OR LOWER(name) LIKE LOWER(?)) "
+                        + " AND (? IS NULL OR LOWER(description) LIKE LOWER(?)) "
+                        + " AND (? IS NULL OR year = ?) "
+                        + " AND (? IS NULL OR LOWER(month) = LOWER(?)) "
+                        + " AND (? IS NULL OR day = ?) "
+                        + " AND (? IS NULL OR LOWER(location) LIKE LOWER(?)) "
+                        + " AND (? IS NULL OR LOWER(contact) LIKE LOWER(?)) ";
+
+        try (Connection c = Database.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+
+            // name
+            ps.setObject(1, name);
+            ps.setObject(2, name != null ? "%" + name + "%" : null);
+
+            // description
+            ps.setObject(3, desc);
+            ps.setObject(4, desc != null ? "%" + desc + "%" : null);
+
+            // year
+            ps.setObject(5, year);
+            ps.setObject(6, year);
+
+            // month
+            ps.setObject(7, month);
+            ps.setObject(8, month);
+
+            // day
+            ps.setObject(9, day);
+            ps.setObject(10, day);
+
+            // location
+            ps.setObject(11, location);
+            ps.setObject(12, location != null ? "%" + location + "%" : null);
+
+            // contact
+            ps.setObject(13, contact);
+            ps.setObject(14, contact != null ? "%" + contact + "%" : null);
+
+            List<Item> list = new ArrayList<>();
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) list.add(extract(rs));
+            }
+            return list;
+        }
+    }
+
+
+    // ======================================================
+    //   SAVE / DELETE / GET (UNCHANGED)
+    // ======================================================
+
     public int saveLost(Item it) throws SQLException {
         String sql = "INSERT INTO lost_items(name,description,year,month,day,location,contact) VALUES (?,?,?,?,?,?,?)";
 
@@ -38,9 +158,7 @@ public class ItemDao {
             p.executeUpdate();
 
             try (ResultSet generatedKeys = p.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    return generatedKeys.getInt(1);
-                }
+                if (generatedKeys.next()) return generatedKeys.getInt(1);
             }
         }
         return -1;
@@ -55,11 +173,8 @@ public class ItemDao {
              Statement s = c.createStatement();
              ResultSet rs = s.executeQuery(sql)) {
 
-            while (rs.next()) {
-                list.add(extract(rs));
-            }
+            while (rs.next()) list.add(extract(rs));
         }
-
         return list;
     }
 
@@ -71,26 +186,10 @@ public class ItemDao {
         }
     }
 
-    public List<Item> searchLostByName(String name) throws SQLException {
-        List<Item> list = new ArrayList<>();
-        String sql = "SELECT * FROM lost_items WHERE name LIKE ?";
-
-        try (Connection c = Database.getConnection(); PreparedStatement p = c.prepareStatement(sql)) {
-            p.setString(1, "%" + name + "%");
-            try (ResultSet rs = p.executeQuery()) {
-                while (rs.next()) {
-                    list.add(extract(rs));
-                }
-            }
-        }
-        return list;
-    }
 
     public int saveFound(Item item) throws SQLException {
-        String sql = """
-        INSERT INTO found_items(name, description, year, month, day, location, contact)
-        VALUES(?,?,?,?,?,?,?)
-    """;
+        String sql =
+                "INSERT INTO found_items(name, description, year, month, day, location, contact) VALUES(?,?,?,?,?,?,?)";
 
         try (Connection con = Database.getConnection();
              PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -105,9 +204,7 @@ public class ItemDao {
             ps.executeUpdate();
 
             try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    return generatedKeys.getInt(1);
-                }
+                if (generatedKeys.next()) return generatedKeys.getInt(1);
             }
         }
         return -1;
@@ -122,21 +219,6 @@ public class ItemDao {
              ResultSet rs = st.executeQuery(sql)) {
 
             while (rs.next()) list.add(extract(rs));
-        }
-        return list;
-    }
-    public List<Item> searchFoundByName(String name) throws SQLException {
-        List<Item> list = new ArrayList<>();
-        String sql = "SELECT * FROM found_items WHERE name LIKE ?";
-
-        try (Connection c = Database.getConnection();
-             PreparedStatement p = c.prepareStatement(sql)) {
-            p.setString(1, "%" + name + "%");
-            try (ResultSet rs = p.executeQuery()) {
-                while (rs.next()) {
-                    list.add(extract(rs));
-                }
-            }
         }
         return list;
     }
