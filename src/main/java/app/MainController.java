@@ -161,8 +161,10 @@ public class MainController {
 
     @FXML
     void onSubmit() {
-        if (!validateDateFields()) {
-            return;
+        if (currentMode==Mode.REPORT){
+            if (!validateDateFields()) {
+                return;
+            }
         }
         
         try {
