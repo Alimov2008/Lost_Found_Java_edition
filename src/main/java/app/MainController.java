@@ -1,6 +1,7 @@
 package app;
 
 import dao.ItemDao;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import model.Item;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -26,7 +27,7 @@ public class MainController {
     @FXML private Label statusLabel;
 
     @FXML private TableView<Item> lostTable;
-    @FXML private TableColumn<Item, String> lostIdCol;
+    @FXML private TableColumn<Item, Number> lostIdCol;
     @FXML private TableColumn<Item, String> lostNameCol;
     @FXML private TableColumn<Item, String> lostDescCol;
     @FXML private TableColumn<Item, String> lostDateCol;
@@ -34,7 +35,7 @@ public class MainController {
     @FXML private TableColumn<Item, String> lostContactCol;
 
     @FXML private TableView<Item> foundTable;
-    @FXML private TableColumn<Item, String> foundIdCol;
+    @FXML private TableColumn<Item, Number> foundIdCol;
     @FXML private TableColumn<Item, String> foundNameCol;
     @FXML private TableColumn<Item, String> foundDescCol;
     @FXML private TableColumn<Item, String> foundDateCol;
@@ -61,14 +62,14 @@ public class MainController {
     }
 
     private void configureTableColumns() {
-        lostIdCol.setCellValueFactory(c -> new SimpleStringProperty(String.valueOf(c.getValue().getId())));
+        lostIdCol.setCellValueFactory(c -> new ReadOnlyObjectWrapper<>(c.getValue().getId()));
         lostNameCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getName()));
         lostDescCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDescription()));
         lostDateCol.setCellValueFactory(c -> new SimpleStringProperty(formatDate(c.getValue())));
         lostLocationCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getLocation()));
         lostContactCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getContact()));
 
-        foundIdCol.setCellValueFactory(c -> new SimpleStringProperty(String.valueOf(c.getValue().getId())));
+        foundIdCol.setCellValueFactory(c -> new ReadOnlyObjectWrapper<>(c.getValue().getId()));
         foundNameCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getName()));
         foundDescCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDescription()));
         foundDateCol.setCellValueFactory(c -> new SimpleStringProperty(formatDate(c.getValue())));
