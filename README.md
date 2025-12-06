@@ -2,7 +2,7 @@
 
 A portable Java application for managing lost and found items with a console-based interface.
 
-## 📋 Features
+## Features
 
 - Report lost items
 - Report found items  
@@ -17,7 +17,7 @@ A portable Java application for managing lost and found items with a console-bas
 ### Prerequisites
 - **Java 17 or later** must be installed on your system
 
-## 🗃️ Database Location
+## Database Location
 
 The application automatically creates and manages its database:
 - **Location**: `./LostFoundData/lostfound.db` 
