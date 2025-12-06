@@ -12,7 +12,6 @@ import javafx.scene.control.*;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 public class MainController {
 
@@ -186,11 +185,11 @@ public class MainController {
             return;
         if (currentType == Type.LOST) {
             int id = itemDao.saveLost(item);
-            statusLabel.setText("Lost item reported (id=" + id + ")");
+            statusLabel.setText("Lost item reported id=" + id + " ");
             refreshLostTableOnly();
         } else {
             int id = itemDao.saveFound(item);
-            statusLabel.setText("Found item reported (id=" + id + ")");
+            statusLabel.setText("Found item reported id=" + id + " ");
             refreshFoundTableOnly();
         }
         clearFormFields();
@@ -210,7 +209,7 @@ public class MainController {
                 || day != null || loc != null || contact != null;
 
         if (!anyField) {
-            showError("Enter at least one field to search.");
+            showError("Enter at least one field to search");
             return;
         }
 
@@ -232,7 +231,7 @@ public class MainController {
                 : foundTable.getSelectionModel().getSelectedItem();
 
         if (selected == null) {
-            showError("Select an item from the table to delete.");
+            showError("Select an item from table to delete");
             return;
         }
 
@@ -289,7 +288,7 @@ public class MainController {
         try {
             year = Integer.parseInt(yearText);
         } catch (NumberFormatException e) {
-            statusLabel.setText("Year must be a number.");
+            statusLabel.setText("Year must be number.");
             return false;
         }
 
@@ -304,12 +303,12 @@ public class MainController {
         try {
             month = Integer.parseInt(monthText);
         } catch (NumberFormatException e) {
-            statusLabel.setText("Month must be a number between 1–12.");
+            statusLabel.setText("Month must be number between 1–12");
             return false;
         }
 
         if (month < 1 || month > 12) {
-            statusLabel.setText("Month must be between 1–12.");
+            statusLabel.setText("Month must be between 1–12");
             return false;
         }
 
@@ -319,7 +318,7 @@ public class MainController {
         try {
             day = Integer.parseInt(dayText);
         } catch (NumberFormatException e) {
-            statusLabel.setText("Day must be a number.");
+            statusLabel.setText("Day must be number.");
             return false;
         }
 
@@ -339,7 +338,7 @@ public class MainController {
 
         String name = nameField.getText().trim();
         if (name.isEmpty()) {
-            showError("Name is required.");
+            showError("Name is required");
             return null;
         }
         item.setName(name);
@@ -381,7 +380,7 @@ public class MainController {
     }
 
     private void showError(String msg) {
-        statusLabel.setText("ERROR: " + msg);
+        statusLabel.setText("error: " + msg);
         Alert alert = new Alert(Alert.AlertType.ERROR, msg, ButtonType.OK);
         alert.setHeaderText(null);
         alert.showAndWait();

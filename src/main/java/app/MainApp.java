@@ -13,14 +13,11 @@ public class MainApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Database.initialize();
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/main.fxml"));
         Scene scene = new Scene(loader.load());
         scene.getStylesheets().add(getClass().getResource("/app/styles.css").toExternalForm());
-
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-
-        stage.setTitle("Lost & Found - JavaFX");
+        stage.setTitle("Lost and Found");
         stage.setScene(scene);
         stage.setResizable(true);
         stage.setWidth(screenBounds.getWidth()*0.9);
@@ -28,7 +25,6 @@ public class MainApp extends Application {
         stage.centerOnScreen();
         stage.show();
     }
-
     public static void main(String[] args) {
         launch();
     }

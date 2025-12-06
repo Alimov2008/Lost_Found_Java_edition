@@ -61,7 +61,7 @@ public class ItemDao {
 
             List<Item> list = new ArrayList<>();
             try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) list.add(extract(rs));
+                while (rs.next()) {list.add(extract(rs));}
             }
             return list;
         }
@@ -107,7 +107,9 @@ public class ItemDao {
 
             List<Item> list = new ArrayList<>();
             try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) list.add(extract(rs));
+                while (rs.next()) {
+                    list.add(extract(rs));
+                }
             }
             return list;
         }
@@ -148,7 +150,9 @@ public class ItemDao {
              Statement s = c.createStatement();
              ResultSet rs = s.executeQuery(sql)) {
 
-            while (rs.next()) list.add(extract(rs));
+            while (rs.next()) {
+                list.add(extract(rs));
+            }
         }
         return list;
     }
@@ -193,7 +197,9 @@ public class ItemDao {
              Statement st = con.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
 
-            while (rs.next()) list.add(extract(rs));
+            while (rs.next()) {
+                list.add(extract(rs));
+            }
         }
         return list;
     }

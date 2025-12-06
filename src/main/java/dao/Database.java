@@ -17,12 +17,12 @@ public class Database {
 
             if (!Files.exists(appDir)) {
                 Files.createDirectories(appDir);
-                System.out.println("Created data directory: " + appDir.toString());
+                System.out.println("created data folder: " + appDir.toString());
             }
 
             return appDir.resolve("lostfound.db").toString();
         } catch (Exception e) {
-            System.err.println("Error creating data directory: " + e.getMessage());
+            System.err.println("error creating data directory: " + e.getMessage());
             return "lostfound.db";
         }
     }
@@ -65,10 +65,10 @@ public class Database {
 
             stmt.execute(createLost);
             stmt.execute(createFound);
-            System.out.println("Database initialized at: " + getDatabasePath());
+            System.out.println("database created at: " + getDatabasePath());
 
         } catch (SQLException e) {
-            System.err.println("Database initialization error: " + e.getMessage());
+            System.err.println("database creation error: " + e.getMessage());
             e.printStackTrace();
         }
     }

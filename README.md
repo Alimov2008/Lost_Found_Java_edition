@@ -4,62 +4,29 @@ A portable Java application for managing lost and found items with a console-bas
 
 ## 📋 Features
 
-- ✅ Report lost items
-- ✅ Report found items  
-- ✅ View all items (lost/found)
-- ✅ Search items by name
-- ✅ Delete items
-- ✅ Persistent SQLite database
-- ✅ Portable - runs anywhere with Java
+- Report lost items
+- Report found items  
+- View all items (lost/found)
+- Search items by name
+- Delete items
+- Persistent SQLite database
+- Portable - runs anywhere with Java
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - **Java 17 or later** must be installed on your system
 
-### How to Check Java Version
-```bash
-java -version
-```
-
-If you don't have Java, download it from:
-- [Oracle Java](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html)
-- [OpenJDK](https://openjdk.org/projects/jdk/17/)
-
-### Running the Application
-
-#### Option 1: Direct JAR Execution
-```bash
-java -jar Lost_Found-1.0-SNAPSHOT.jar
-```
-
-#### Option 2: Using Provided Scripts
-
-**Windows:**
-- Double-click `run.bat`
-- Or run in Command Prompt: `run.bat`
-
-**Linux/Mac:**
-- Make script executable: `chmod +x run.sh`
-- Run: `./run.sh`
-
-### Creating Jar file  from pom.xml
-```bash
-mvn clean compile
-mvn clean package
-```
-
 ## 🗃️ Database Location
 
 The application automatically creates and manages its database:
-- **Location**: `./LostFoundData/lostfound.db` (in the same folder as the JAR)
-- **No setup required** - everything works out of the box
+- **Location**: `./LostFoundData/lostfound.db` 
 
-## 🎮 How to Use
+
+## How to Use
 
 ### Main Menu
 ```
-=== MAIN MENU ===
 1. Report Item
 2. View Items
 3. Search Items
@@ -88,47 +55,25 @@ The application automatically creates and manages its database:
 - Case-insensitive search
 
 ### Deleting Items
-- View items first to see their IDs
-- Delete by entering the item ID
+- Select item you want to delete from the table 
+- press Delete button to delete
 - Confirmation provided
 
-## 🔧 Technical Details
+## Technical Details
 
 - **Built with**: Java 17, Maven
 - **Database**: SQLite (embedded)
-- **Dependencies**: SQLite JDBC driver only
+- **Dependencies**: SQLite JDBC driver, Java JDK 24, JavaFX library 17.0.6
 - **Platform**: Cross-platform (Windows, Linux, Mac)
 
-## ❓ Troubleshooting
+Or run from your home directory
 
-### "Java not found" error
-- Install Java 17 or later
-- Ensure Java is in your system PATH
-
-### "No main manifest attribute" error
-- The JAR file is corrupted - download again
-
-### Database issues
-- The application creates the database automatically
-- If problems occur, delete the `LostFoundData` folder and restart
-
-### Permission errors (Linux/Mac)
-- Make sure you have write permissions in the current directory
-- Or run from your home directory
-
-## 📝 Data Persistence
+## Data Persistence
 
 - All data is saved automatically
 - Database file persists between application runs
-- Safe to close and reopen - your data will be there
-
-## 🆘 Getting Help
-
-If you encounter issues:
-1. Check that Java 17+ is installed
-2. Ensure you have write permissions in the current directory
-3. The application will show the database location on startup
+- Safe to close and reopen and data will be there
 
 ---
 
-**Enjoy using the Lost & Found System!** 🎉
+**Enjoy using the Lost and Found System** 
